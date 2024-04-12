@@ -54,28 +54,86 @@
       <button id="showListDialog">New List</button>
     </div>
     <main>
-
+      <div class="listInformation">
+        <h1 id="currentList">Exercise</h1>
+        <h2 id="listDescription">Exercises I need to do</h2>
+      </div>
+      <div class="topics">
+        <div class="topic-wrapper">
+          <h2 class="topic">Legs</h2>
+          <button>options</button>
+        </div>
+        <div class="tasks">
+          <div class="task-wrapper">
+            <label for="topicTask1">
+              <input type="checkbox" name="task" id="topicTask1">
+              Squats
+            </label>
+            <button>options</button>
+          </div>
+          <div class="task-wrapper">
+            <label for="topicTask2">
+              <input type="checkbox" name="task" id="topicTask2">
+              Deadlift
+            </label>
+            <button>options</button>
+          </div>
+          <div class="task-wrapper">
+            <label for="topicTask3">
+              <input type="checkbox" name="task" id="topicTask3">
+              Leg Press
+            </label>
+            <button>options</button>
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
-
+      <button id="showTaskDialog">New Task</button>
     </footer>
 
     <dialog id="listDialog">
       <form id="listForm" class="dialog-form">
         <div class="input-wrapper">
-          <label for="listName"> Category
-            <input type="text" name="category" id="listCategory" required>
+          <label for="listCategoryInput"> Category
+            <input type="text" name="category" id="listCategoryInput" required>
           </label>
-          <label for="listName"> List Title
-            <input type="text" name="listName" id="listName" required>
+          <label for="listNameInput"> List Title
+            <input type="text" name="listName" id="listNameInput" required>
           </label>
-          <label for="listName"> Description
-            <input type="text" name="description" id="listDescription">
+          <label for="listDescriptionInput"> Description
+            <input type="text" name="description" id="listDescriptionInput">
           </label>
         </div> 
         <div class="button-wrapper">
-          <button value="cancel" formmethod="dialog">Cancel</button>
-          <button id="confirmBtn" value="default">Confirm</button>
+          <button id="listCancelBtn" value="cancel" formmethod="dialog">Cancel</button>
+          <button id="listConfirmBtn" value="default">Confirm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="taskDialog">
+      <form id="taskForm" class="dialog-form">
+        <div class="input-wrapper">
+          <label for="taskTopicInput"> Topic
+            <input type="text" name="topic" id="taskTopicInput" required>
+          </label>
+          <label for="taskNameInput"> Task Title
+            <input type="text" name="taskName" id="taskNameInput" required>
+          </label>
+          <label for="taskDescriptionInput"> Description
+            <input type="text" name="description" id="taskDescriptionInput">
+          </label>
+          <label for="taskDueInput"> Due Date
+            <input type="date" name="dueDate" id="taskDueInput">
+          </label>
+          <label for="taskPriorityInput"> Important?
+            <input type="checkbox" name="priority" id="taskPriorityInput">
+          </label>
+        </div> 
+        <div class="button-wrapper">
+          <button id="taskCancelBtn" value="cancel" formmethod="dialog">Cancel</button>
+          <button id="taskConfirmBtn" value="default">Confirm</button>
         </div>
       </form>
     </dialog>

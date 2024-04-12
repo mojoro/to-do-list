@@ -1,5 +1,6 @@
 import { addItem, removeItem, printItems } from './utils.js';
 
+const topics = []
 class Topic {
   constructor(name) {
     this.name = name;
@@ -7,7 +8,8 @@ class Topic {
     this.addTask = addItem.bind(this.tasks);
     this.removeTask = removeItem.bind(this.tasks);
     this.printTasks = printItems.bind(this.tasks);
+    topics.push(this);
   }
 }
 
-export { Topic };
+export { Topic, topics };

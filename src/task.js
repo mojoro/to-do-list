@@ -15,6 +15,10 @@ class Task {
   toggleComplete() {
     this.completed = this.completed ? false : true;
   }
+
+  addSubTask(task){
+    this.subTasks.push(task);
+  }
 }
 
 export { Task, allTasks };

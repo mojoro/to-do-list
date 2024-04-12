@@ -16,4 +16,33 @@ const printItems = function() {
   }
 }
 
-export { addItem, removeItem, printItems };
+function findCategory(catName) {
+  for (const category of categories) {
+    if (category.name === catName) {
+      return category;
+    }
+  }
+  const newCat = new Category(catName);
+  return newCat;
+}
+
+function findList(listName) {
+  for (const list of lists) {
+    if(list.name === listName){
+      return list
+    }
+  }
+}
+
+function findTopic(list, topicName) {
+  for (const topic of list.topics) {
+    if (topic.name === topicName) {
+      return topic;
+    }
+  }
+  const newTopic = new Topic(topicName)
+  return newTopic;
+}
+
+
+export { addItem, removeItem, printItems, findCategory, findList, findTopic };
