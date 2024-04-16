@@ -1,4 +1,4 @@
-import { addItem, removeItem, printItems } from './utils.js';
+import { addItem, removeItem, printItems, generateID } from './utils.js';
 
 const lists = [];
 class List {
@@ -9,6 +9,7 @@ class List {
     this.addTopic = addItem.bind(this.topics);
     this.removeTopic = removeItem.bind(this.topics);
     this.printTopics = printItems.bind(this.topics);
+    this.ID = generateID('LIST-');
     lists.push(this);
   }
 }

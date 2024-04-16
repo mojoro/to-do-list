@@ -16,6 +16,15 @@ const printItems = function() {
   }
 }
 
+const generateID = function(prefix) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < 7; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return prefix + id;
+}
+
 function findCategory(catName) {
   for (const category of categories) {
     if (category.name === catName) {
@@ -45,4 +54,4 @@ function findTopic(list, topicName) {
 }
 
 
-export { addItem, removeItem, printItems, findCategory, findList, findTopic };
+export { addItem, removeItem, printItems, generateID, findCategory, findList, findTopic };

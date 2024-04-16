@@ -1,4 +1,4 @@
-import { addItem, removeItem, printItems } from './utils.js';
+import { addItem, removeItem, printItems, generateID } from './utils.js';
 
 const categories = [];
 
@@ -9,6 +9,7 @@ class Category {
     this.addList = addItem.bind(this.lists);
     this.removeList = removeItem.bind(this.lists);
     this.printLists = printItems.bind(this.lists);
+    this.ID = generateID('CATE-');
     categories.push(this)
   }
 }

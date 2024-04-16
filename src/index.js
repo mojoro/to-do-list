@@ -78,6 +78,9 @@ function printList(list) {
 }
 
 // Build function to write categories (sidebar) to DOM next, then write functions for default set-up
+function printSidebar(){
+  
+}
 
 const exampleList = new List('Exercise', 'Exercises to do');
 const exampleTopic = new Topic('Legs');
