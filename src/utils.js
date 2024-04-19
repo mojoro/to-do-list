@@ -1,3 +1,6 @@
+import { lists } from './list'
+import { allTasks } from './task';
+
 const addItem = function(item) {
   this.push(item);
 }
@@ -24,6 +27,8 @@ const generateID = function(prefix) {
   }
   return prefix + id;
 }
+
+
 
 function findCategory(catName) {
   for (const category of categories) {
@@ -54,4 +59,4 @@ function findTopic(list, topicName) {
 }
 
 
-export { addItem, removeItem, printItems, generateID, findCategory, findList, findTopic };
+export { addItem, removeItem, printItems, generateID, findCategory, findList, findTopic, };

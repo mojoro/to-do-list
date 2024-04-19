@@ -2,7 +2,7 @@ const allTasks = [];
 import { generateID } from './utils.js';
 
 class Task {
-  constructor(name = 'title', desc = 'description', dueDate = '11/04/2024', priority = 'high', notes = '', subTasks = []) {
+  constructor(name = 'title', desc = 'description', dueDate = '11/04/2024', priority = 'high', parentTopic = null, notes = '', subTasks = [], ) {
     this.name = name;
     this.desc = desc;
     this.dueDate = new Date(dueDate);
@@ -11,6 +11,7 @@ class Task {
     this.subTasks = subTasks;
     this.completed = false;
     this.ID = generateID('TASK-');
+    this.parentTopic = parentTopic;
     allTasks.push(this);
   }
 
@@ -20,6 +21,18 @@ class Task {
 
   addSubTask(task){
     this.subTasks.push(task);
+  }
+  
+  delete() {
+    const index = allTasks.indexOf(this);
+    if (index !== -1) {
+      allTasks.splice(index, 1);
+    }
+
+    const topicIndex = this.parentTopic.tasks.indexOf(this);
+    if (topicIndex !== -1) {
+      this.parentTopic.tasks.splice(topicIndex, 1);
+    }
   }
 }
 

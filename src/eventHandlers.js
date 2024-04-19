@@ -1,4 +1,8 @@
 import { findCategory, findList, findTopic } from './utils.js';
+import { printList, printSidebar } from './DOM.js';
+import { List, lists } from './list.js';
+import { Topic, topics } from './topic.js';
+import { Task, allTasks } from './task.js';
 
 function handleListForm() {
   const showList = document.getElementById('showListDialog');
@@ -18,7 +22,7 @@ function handleListForm() {
     
     category.addList(list);
   
-    console.log(category);
+    printSidebar();
   
     listDialog.close();
   });
@@ -38,12 +42,16 @@ function handleTaskForm(){
     const topic = findTopic(currentList, document.querySelector('#taskTopicInput').value);
     const task = new Task(
       document.querySelector('#taskNameInput').value,
-      document.querySelector('#taskDescriptionInput').value);
+      document.querySelector('#taskDescriptionInput').value,
+      document.querySelector('#taskDueInput').value,
+      document.querySelector('#taskPriorityInput').value,
+      topic,
+    );
     
     topic.addTask(task);
     currentList.addTopic(topic);
 
-    console.log(topic);
+    printList(currentList);
 
     taskDialog.close();
   });
