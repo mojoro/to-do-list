@@ -43,6 +43,7 @@ completed.update = function() {
 
 todayList.update();
 thisWeek.update();
+allTasksList.update();
 completed.update();
 
 export { todayList, thisWeek, allTasksList, completed, }
