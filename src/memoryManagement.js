@@ -47,11 +47,29 @@ function writeData() {
   for (const task of taskStorage) {
     const readTask = new Task(task.name, task.description, task.dueDate, task.priority, findTopic(task.parent))
   }
+
+  organizeObjects();
 }
 
 // adds objects to the appropriate parent based on the listed parent inside.
 function organizeObjects() {
+  for (const list of lists) {
+    if (list.parentCategory.lists.includes(list)) continue;
 
+    list.parentCategory.addList(list);
+  }
+
+  for (const topic of topics) {
+    if (topic.parentList.topics.includes(topic)) continue;
+
+    topic.parentList.addTopic(topic);
+  }
+
+  for (const task of allTasks) {
+    if (task.parentTopic.tasks.includes(task)) continue;
+
+    task.parentTopic.addTask(task);
+  }
 }
 
 function extractConstructors() {
