@@ -1,4 +1,6 @@
+import { Category, categories } from './category';
 import { lists } from './list'
+import { Topic, topics } from './topic';
 import { allTasks } from './task';
 
 const addItem = function(item) {
@@ -48,8 +50,8 @@ function findList(listName) {
   }
 }
 
-function findTopic(list, topicName) {
-  for (const topic of list.topics) {
+function findTopic(topicName) {
+  for (const topic of topics) {
     if (topic.name === topicName) {
       return topic;
     }
@@ -59,4 +61,6 @@ function findTopic(list, topicName) {
 }
 
 
-export { addItem, removeItem, printItems, generateID, findCategory, findList, findTopic, };
+
+
+export { addItem, removeItem, printItems, generateID, findCategory, findList, findTopic };
