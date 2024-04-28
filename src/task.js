@@ -1,4 +1,5 @@
 const allTasks = [];
+import { saveData } from './memoryManagement.js';
 import { generateID } from './utils.js';
 
 class Task {
@@ -33,6 +34,8 @@ class Task {
     if (topicIndex !== -1) {
       this.parentTopic.tasks.splice(topicIndex, 1);
     }
+    
+    saveData();
   }
 }
 

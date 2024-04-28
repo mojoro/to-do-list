@@ -1,3 +1,4 @@
+import { saveData } from './memoryManagement.js';
 import { addItem, removeItem, printItems, generateID } from './utils.js';
 
 const topics = []
@@ -13,14 +14,24 @@ class Topic {
     topics.push(this);
   }
 
+  removeTask(task){
+    const topicIndex = this.tasks.indexOf(task);
+    if (topicIndex !== -1) {
+      this.tasks.splice(topicIndex, 1);
+    }
+    saveData();
+  }
+
   deleteTasks() {
     const tasksCopy = [...this.tasks];
     for (const task of tasksCopy) {
       task.delete();
     }
+    saveData();
   }
 
   delete() {
+    this.deleteTasks();
     const index = topics.indexOf(this);
     if (index !== -1) {
       topics.splice(index, 1);
@@ -28,8 +39,9 @@ class Topic {
 
     const listIndex = this.parentList.topics.indexOf(this);
     if (listIndex !== -1) {
-      this.parentList.tasks.splice(listIndex, 1);
+      this.parentList.topics.splice(listIndex, 1);
     }
+    saveData();
   }
 }
 

@@ -1,6 +1,7 @@
 import { categories } from './category.js';
+import { lists } from './list.js';
 import { findCategory, findList, findTopic,  } from './utils.js';
-import { todayList, thisWeek, allTasksList, completed, } from './defaultLists.js';
+import { todayList, thisWeek, allTasksList, completed, updateDefaults, } from './defaultLists.js';
 
 export function printList(list) {
   const main = document.querySelector('main');
@@ -71,6 +72,7 @@ export function printList(list) {
 
       buttonTask.addEventListener('click', () => {
         task.delete();
+        updateDefaults();
         printList(list);
       });
 
@@ -113,25 +115,7 @@ function printDefault(aside) {
   completedBtn.textContent = 'Completed';
   completedBtn.id = 'completed';
 
-  todayBtn.addEventListener('click', () => {
-    todayList.update();
-    printList(todayList);
-  })
-
-  weekBtn.addEventListener('click', () => {
-    thisWeek.update();
-    printList(thisWeek);
-  });
-  
-  allTasksBtn.addEventListener('click', (e) => {
-    allTasksList.update();
-    printList(allTasksList);
-  });
-
-  completedBtn.addEventListener('click', (e) => {
-    completed.update();
-    printList(completed);
-  });
+  addSidebarListeners();
 
   today.appendChild(todayBtn);
   week.appendChild(weekBtn);
@@ -144,6 +128,28 @@ function printDefault(aside) {
 
   aside.appendChild(defaultGroup);
   aside.appendChild(completedDiv);
+
+  function addSidebarListeners() {
+    todayBtn.addEventListener('click', () => {
+      todayList.update();
+      printList(todayList);
+    });
+
+    weekBtn.addEventListener('click', () => {
+      thisWeek.update();
+      printList(thisWeek);
+    });
+
+    allTasksBtn.addEventListener('click', (e) => {
+      allTasksList.update();
+      printList(allTasksList);
+    });
+
+    completedBtn.addEventListener('click', (e) => {
+      completed.update();
+      printList(completed);
+    });
+  }
 }
 
 // Build function to write categories (sidebar) to DOM next, then write functions for default set-up
@@ -161,6 +167,15 @@ export function printSidebar() {
     catDiv.classList.add('category');
     catDiv.textContent = category.name;
 
+    const catDelete = document.createElement('button');
+    catDelete.textContent = 'Delete';
+    catDelete.addEventListener('click', () => {
+      category.delete();
+      printSidebar();
+    });
+
+    catDiv.appendChild(catDelete);
+
     catGroup.appendChild(catDiv);
     for (const list of category.lists) {
       const listDiv = document.createElement('div');
@@ -173,7 +188,16 @@ export function printSidebar() {
         printList(list);
       });
 
+      const listDelete = document.createElement('button');
+      listDelete.textContent = 'Delete';
+      listDelete.addEventListener('click', () => {
+        list.delete();
+        printSidebar();
+        if (document.getElementById('currentList').textContent === list.name) printList(lists[0]);
+      });
+
       listDiv.appendChild(listBtn);
+      listDiv.appendChild(listDelete);
       catGroup.appendChild(listDiv);
     }
     aside.appendChild(catGroup);

@@ -50,13 +50,13 @@ function findList(listName) {
   }
 }
 
-function findTopic(topicName) {
+function findTopic(topicName, list = null) {
   for (const topic of topics) {
     if (topic.name === topicName) {
       return topic;
     }
   }
-  const newTopic = new Topic(topicName)
+  const newTopic = new Topic(topicName, list)
   return newTopic;
 }
 

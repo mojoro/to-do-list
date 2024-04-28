@@ -13,6 +13,10 @@ todayList.update = function() {
     if ((isBefore(task.dueDate, today) || isToday(task.dueDate, today)) && !this.topics[0].tasks.includes(task)) this.topics[0].addTask(task);
     else if (!isBefore(task.dueDate, today) && !isToday(task.dueDate, today)) this.topics[0].removeTask(task);
   } 
+
+  for (const task of this.topics[0].tasks) {
+    if (!allTasks.includes(task)) this.topics[0].removeTask(task);
+  }
 };
 
 const thisWeek = new List('This Week', 'Tasks for this week');
@@ -24,6 +28,10 @@ thisWeek.update = function() {
     if (isBefore(task.dueDate, nextWeek) && !this.topics[0].tasks.includes(task)) this.topics[0].addTask(task);
     else if (!isBefore(task.dueDate, nextWeek)) this.topics[0].removeTask(task);
   } 
+
+  for (const task of this.topics[0].tasks) {
+    if (!allTasks.includes(task)) this.topics[0].removeTask(task);
+  }
 };
 
 const allTasksList = new List('All Tasks', 'Tasks collected from all lists');
@@ -39,11 +47,18 @@ completed.update = function() {
     if (task.completed && !this.topics[0].tasks.includes(task)) this.topics[0].addTask(task);
     else if (!task.completed) this.topics[0].removeTask(task);
   } 
+
+  for (const task of this.topics[0].tasks) {
+    if (!allTasks.includes(task)) this.topics[0].removeTask(task);
+  }
 };
 
-todayList.update();
-thisWeek.update();
-allTasksList.update();
-completed.update();
+function updateDefaults(){
+  todayList.update();
+  thisWeek.update();
+  allTasksList.update();
+  completed.update();
+}
 
-export { todayList, thisWeek, allTasksList, completed, }
+
+export { todayList, thisWeek, allTasksList, completed, updateDefaults }
