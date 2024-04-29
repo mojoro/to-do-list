@@ -78,6 +78,7 @@ function accessData() {
 
 // read json and convert into objects.
 function writeData() {
+  firstLaunchData();
   const [categoryStorage, listStorage, topicStorage, taskStorage] = accessData();
 
   for (const category of categoryStorage) {
@@ -140,6 +141,25 @@ function clearData() {
   lists.length = 0;
   topics.length = 0;
   allTasks.length = 0;
+}
+
+function firstLaunchData(){
+  if (!localStorage.getItem('categoryStorage')){
+    const exampleCategory = new Category('General');
+    const exampleList = new List('First Launch', 'Some things you might want to do!', exampleCategory);
+    const exampleTopic = new Topic('My First Tasks', exampleList);
+    const task1 = new Task('Create your own lists and categories', '', '', '', exampleTopic);
+    const task2 = new Task('Create your own tasks and topics', '', '', '', exampleTopic);
+    const task3 = new Task('Delete all this dummy content', '', '', '', exampleTopic);
+
+    exampleTopic.addTask(task1)
+    exampleTopic.addTask(task2)
+    exampleTopic.addTask(task3)
+    exampleList.addTopic(exampleTopic);
+    exampleCategory.addList(exampleList);
+
+    saveData();
+  }
 }
 
 export { saveData, writeData, organizeObjects, clearData }
