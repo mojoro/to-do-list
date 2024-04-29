@@ -2,6 +2,7 @@ import { categories } from './category.js';
 import { lists } from './list.js';
 import { findCategory, findList, findTopic,  } from './utils.js';
 import { todayList, thisWeek, allTasksList, completed, updateDefaults, } from './defaultLists.js';
+import { switchTasksCompleteLists } from './eventHandlers.js';
 
 export function printList(list) {
   const main = document.querySelector('main');
@@ -24,6 +25,8 @@ export function printList(list) {
   topics.className = 'topics';
 
   for (const topic of list.topics) {
+    if (topic.tasks.length === 0) continue;
+
     const topicGroup = document.createElement('div');
     const topicWrapper = document.createElement('div');
     const h2Topic = document.createElement('h2');
@@ -36,7 +39,8 @@ export function printList(list) {
     h2Topic.className = 'topicName';
     tasks.className = 'tasks';
 
-    buttonTopic.textContent = 'delete';
+    buttonTopic.textContent = 'X';
+    buttonTopic.classList.add('delete-button', 'hidden');
     h2Topic.textContent = topic.name;
 
     buttonTopic.addEventListener('click', () => {
@@ -53,21 +57,41 @@ export function printList(list) {
 
     for (const task of topic.tasks) {
       const taskWrapper = document.createElement('div');
+      const checkWrapper = document.createElement('div');
       const label = document.createElement('label');
       const input = document.createElement('input');
       const buttonTask = document.createElement('button');
+      const priorityBtn = document.createElement('button');
+      const dueDate = document.createElement('p');
 
       taskWrapper.className = 'task-wrapper';
+      checkWrapper.className = 'check-wrapper';
       label.htmlFor = topic.name + '-' + task.name;
       input.type = 'checkbox';
       input.name = 'task';
       input.id = topic.name + '-' + task.name;
       label.textContent = task.name;
-      buttonTask.textContent = 'delete';
+      label.classList = 'task-name';
+      buttonTask.textContent = 'X';
+      buttonTask.classList.add('delete-button', 'hidden');
+      priorityBtn.classList.add('priority');
+
+      if (task.priority) {
+        priorityBtn.classList.add('important');
+      } 
+      else if (!task.priority) {
+        priorityBtn.classList.add('hidden');
+      }
+
+      if (task.completed){
+        label.classList.add('completed');
+        input.checked = true;
+      }
 
       input.addEventListener('click', () => {
         task.toggleComplete();
         completed.update();
+        printList(list);
       })
 
       buttonTask.addEventListener('click', () => {
@@ -76,8 +100,15 @@ export function printList(list) {
         printList(list);
       });
 
-      label.appendChild(input);
-      taskWrapper.appendChild(label);
+      priorityBtn.addEventListener('click', () => {
+        task.togglePriority();
+        printList(list);
+      })
+
+      checkWrapper.appendChild(input);
+      checkWrapper.appendChild(label);
+      checkWrapper.appendChild(priorityBtn);
+      taskWrapper.appendChild(checkWrapper);
       taskWrapper.appendChild(buttonTask);
       tasks.appendChild(taskWrapper);
     }
@@ -132,21 +163,25 @@ function printDefault(aside) {
   function addSidebarListeners() {
     todayBtn.addEventListener('click', () => {
       todayList.update();
+      switchTasksCompleteLists();
       printList(todayList);
     });
 
     weekBtn.addEventListener('click', () => {
       thisWeek.update();
+      switchTasksCompleteLists();
       printList(thisWeek);
     });
 
     allTasksBtn.addEventListener('click', (e) => {
       allTasksList.update();
+      switchTasksCompleteLists();
       printList(allTasksList);
     });
 
     completedBtn.addEventListener('click', (e) => {
       completed.update();
+      switchTasksCompleteLists();
       printList(completed);
     });
   }
@@ -168,7 +203,8 @@ export function printSidebar() {
     catDiv.textContent = category.name;
 
     const catDelete = document.createElement('button');
-    catDelete.textContent = 'Delete';
+    catDelete.textContent = 'X';
+    catDelete.classList.add('hidden', 'delete-button');
     catDelete.addEventListener('click', () => {
       category.delete();
       printSidebar();
@@ -185,11 +221,13 @@ export function printSidebar() {
       listBtn.textContent = list.name;
       listBtn.addEventListener('click', (e) => {
         const list = findList(e.target.textContent);
+        switchTasksCompleteLists();
         printList(list);
       });
 
       const listDelete = document.createElement('button');
-      listDelete.textContent = 'Delete';
+      listDelete.textContent = 'X';
+      listDelete.classList.add('hidden', 'delete-button');
       listDelete.addEventListener('click', () => {
         list.delete();
         printSidebar();

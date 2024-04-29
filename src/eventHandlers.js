@@ -48,12 +48,14 @@ function handleTaskForm(){
       document.querySelector('#taskNameInput').value,
       document.querySelector('#taskDescriptionInput').value,
       document.querySelector('#taskDueInput').value,
-      document.querySelector('#taskPriorityInput').value,
+      document.querySelector('#taskPriorityInput').checked,
       topic,
     );
     
     topic.addTask(task);
     if (!currentList.topics.includes(topic)) currentList.addTopic(topic);
+
+    console.log(document.querySelector('#taskPriorityInput').checked);
 
     printList(currentList);
     updateDefaults();
@@ -63,4 +65,10 @@ function handleTaskForm(){
   });
 }
 
-export { handleListForm, handleTaskForm }
+function switchTasksCompleteLists(){
+  for (const task of allTasks) {
+    task.modifyParent();
+  }
+}
+
+export { handleListForm, handleTaskForm, switchTasksCompleteLists }
