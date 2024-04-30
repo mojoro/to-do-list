@@ -14,14 +14,6 @@ class Topic {
     topics.push(this);
   }
 
-  removeTask(task){
-    const topicIndex = this.tasks.indexOf(task);
-    if (topicIndex !== -1) {
-      this.tasks.splice(topicIndex, 1);
-    }
-    saveData();
-  }
-
   deleteTasks() {
     const tasksCopy = [...this.tasks];
     for (const task of tasksCopy) {
@@ -41,6 +33,7 @@ class Topic {
     if (listIndex !== -1) {
       this.parentList.topics.splice(listIndex, 1);
     }
+
     saveData();
   }
 }

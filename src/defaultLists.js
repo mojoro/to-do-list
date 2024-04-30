@@ -17,6 +17,10 @@ todayList.update = function() {
   for (const task of this.topics[0].tasks) {
     if (!allTasks.includes(task)) this.topics[0].removeTask(task);
   }
+
+  for (const topic of this.topics) {
+    if (!topics.includes(topic)) this.removeTopic(topic);
+  }
 };
 
 const thisWeek = new List('This Week', 'Tasks for this week');
@@ -31,6 +35,10 @@ thisWeek.update = function() {
 
   for (const task of this.topics[0].tasks) {
     if (!allTasks.includes(task)) this.topics[0].removeTask(task);
+  }
+
+  for (const topic of this.topics) {
+    if (!topics.includes(topic)) this.removeTopic(topic);
   }
 };
 
@@ -50,6 +58,10 @@ completed.update = function() {
 
   for (const task of this.topics[0].tasks) {
     if (!allTasks.includes(task)) this.topics[0].removeTask(task);
+  }
+
+  for (const topic of this.topics) {
+    if (!topics.includes(topic)) this.removeTopic(topic);
   }
 };
 

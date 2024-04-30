@@ -78,34 +78,38 @@ function accessData() {
 
 // read json and convert into objects.
 function writeData() {
-  firstLaunchData();
-  const [categoryStorage, listStorage, topicStorage, taskStorage] = accessData();
+  try {
+    const [categoryStorage, listStorage, topicStorage, taskStorage] = accessData();
 
-  for (const category of categoryStorage) {
-    if (!categories.some(cat => cat.name === category.name)) {
-      const readCategory = new Category(category.name);
+    for (const category of categoryStorage) {
+      if (!categories.some(cat => cat.name === category.name)) {
+        const readCategory = new Category(category.name);
+      }
     }
-  }
 
-  for (const list of listStorage) {
-    if (!lists.some(lst => lst.name === list.name && lst.description === list.description)) {
-      const readList = new List(list.name, list.description, findCategory(list.parent));
+    for (const list of listStorage) {
+      if (!lists.some(lst => lst.name === list.name && lst.description === list.description)) {
+        const readList = new List(list.name, list.description, findCategory(list.parent));
+      }
     }
-  }
 
-  for (const topic of topicStorage) {
-    if (!topics.some(tpc => tpc.name === topic.name)) {
-      const readTopic = new Topic(topic.name, findList(topic.parent));
+    for (const topic of topicStorage) {
+      if (!topics.some(tpc => tpc.name === topic.name)) {
+        const readTopic = new Topic(topic.name, findList(topic.parent));
+      }
     }
-  }
 
-  for (const task of taskStorage) {
-    if (!allTasks.some(tsk => tsk.name === task.name)) {
-      const readTask = new Task(task.name, task.description, task.dueDate, task.priority, findTopic(task.parent), task.completed)
+    for (const task of taskStorage) {
+      if (!allTasks.some(tsk => tsk.name === task.name)) {
+        const readTask = new Task(task.name, task.description, task.dueDate, task.priority, findTopic(task.parent), task.completed)
+      }
     }
-  }
 
-  organizeObjects();
+    organizeObjects();
+  }
+  catch {
+    firstLaunchData();
+  }
 }
 
 // adds objects to the appropriate parent based on the listed parent inside.

@@ -3,6 +3,7 @@ import { lists } from './list.js';
 import { findCategory, findList, findTopic,  } from './utils.js';
 import { todayList, thisWeek, allTasksList, completed, updateDefaults, } from './defaultLists.js';
 import { switchTasksCompleteLists } from './eventHandlers.js';
+import { formatDate } from 'date-fns/format';
 
 export function printList(list) {
   const main = document.querySelector('main');
@@ -44,8 +45,7 @@ export function printList(list) {
     h2Topic.textContent = topic.name;
 
     buttonTopic.addEventListener('click', () => {
-      topic.deleteTasks();
-      list.removeTopic(topic);
+      topic.delete();
       printList(list);
     });
 
@@ -75,6 +75,7 @@ export function printList(list) {
       buttonTask.textContent = 'X';
       buttonTask.classList.add('delete-button', 'hidden');
       priorityBtn.classList.add('priority');
+      dueDate.textContent = formatDate(task.dueDate, 'dd MMMM yyyy');
 
       if (task.priority) {
         priorityBtn.classList.add('important');
@@ -110,6 +111,7 @@ export function printList(list) {
       checkWrapper.appendChild(priorityBtn);
       taskWrapper.appendChild(checkWrapper);
       taskWrapper.appendChild(buttonTask);
+      taskWrapper.appendChild(dueDate);
       tasks.appendChild(taskWrapper);
     }
     topics.appendChild(topicGroup);
@@ -201,6 +203,7 @@ export function printSidebar() {
     const catDiv = document.createElement('div');
     catDiv.classList.add('category');
     catDiv.textContent = category.name;
+    catDiv.style.cursor = 'default';
 
     const catDelete = document.createElement('button');
     catDelete.textContent = 'X';

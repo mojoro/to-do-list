@@ -2,6 +2,7 @@ import { Category, categories } from './category';
 import { lists } from './list'
 import { Topic, topics } from './topic';
 import { allTasks } from './task';
+import { saveData } from './memoryManagement';
 
 const addItem = function(item) {
   this.push(item);
@@ -13,6 +14,7 @@ const removeItem = function(item) {
     this.splice(index, 1);
   }
   else console.log('Not found in list');
+  saveData();
 }
 
 const printItems = function() {

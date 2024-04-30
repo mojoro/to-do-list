@@ -42,3 +42,5 @@ window.Topic = Topic;
 window.Task = Task;
 window.categories = categories;
 window.allTasks = allTasks;
+window.topics = topics;
+window.lists = lists;
