@@ -75,7 +75,12 @@ export function printList(list) {
       buttonTask.textContent = 'X';
       buttonTask.classList.add('delete-button', 'hidden');
       priorityBtn.classList.add('priority');
-      dueDate.textContent = formatDate(task.dueDate, 'dd MMMM yyyy');
+      try {
+        dueDate.textContent = formatDate(task.dueDate, 'dd MMMM yyyy');
+      }
+      catch {
+        dueDate.textContent = '';
+      }
 
       if (task.priority) {
         priorityBtn.classList.add('important');
