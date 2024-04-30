@@ -281,3 +281,6 @@ dialog button:hover {
   background-color: #0056b3;
 }
 
+#taskDialog {
+  max-height: 500px;
+}
